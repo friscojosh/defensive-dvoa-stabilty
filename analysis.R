@@ -1,8 +1,8 @@
-### ----------------------------------------------------
+### -----------------------------------------------------------------------------------------------
 ### Testing the year to year stability of Defensive
 ### DVOA. Data scraped from
 ### https://www.footballoutsiders.com/stats/teamdef
-### ----------------------------------------------------
+### -----------------------------------------------------------------------------------------------
 
 library(tidyverse)
 library(broom)
@@ -17,9 +17,9 @@ dvoa_joined <-dvoa_year2 %>%
 
 colnames(dvoa_joined)
 
-### ------ Models go here --------------------------////
+### ------ Models go here ---------------------------------------------------------------------////
 
-### Total Defensive DVOA first ------------------------
+### Total Defensive DVOA first --------------------------------------------------------------------
 
 total_dvoa_model <- lm(data = dvoa_joined, total_dvoa.y ~ total_dvoa.x)
 summary(total_dvoa_model)
@@ -29,7 +29,7 @@ total_dvoa_stability <- glance(total_dvoa_model) %>%
           r.squared = round(r.squared, 3)) %>%
    select(metric, r.squared)
 
-### This will go in the README as a visual ------------
+### This will go in the README as a visual ---------------------------------------------------------
 
 ggplot(data = dvoa_joined, aes(x = total_dvoa.x, y = total_dvoa.y)) +
    geom_point() +
@@ -41,12 +41,12 @@ ggplot(data = dvoa_joined, aes(x = total_dvoa.x, y = total_dvoa.y)) +
         subtitle = paste("r-squared:", total_dvoa_stability$r.squared),
         caption = "Source: Football Outsiders. https://www.footballoutsiders.com/stats/teamdef")
 
-### magic incantation to save the plot to disk --------
+### magic incantation to save the plot to disk -----------------------------------------------------
 
 dev.copy(png,'total_defensive_dvoa.png')
 dev.off()
 
-### Pass DVOA -----------------------------------------
+### Pass DVOA -------------------------------------------------------------------------------------
 
 pass_dvoa_model <- lm(data = dvoa_joined, pass_dvoa.y ~ pass_dvoa.x)
 summary(pass_dvoa_model)
@@ -56,7 +56,7 @@ pass_dvoa_stability <- glance(pass_dvoa_model) %>%
           r.squared = round(r.squared, 3)) %>%
    select(metric, r.squared)
 
-### Rush DVOA -----------------------------------------
+### Rush DVOA -------------------------------------------------------------------------------------
 
 rush_dvoa_model <- lm(data = dvoa_joined, rush_dvoa.y ~ rush_dvoa.x)
 summary(rush_dvoa_model)
@@ -66,7 +66,7 @@ rush_dvoa_stability <- glance(rush_dvoa_model) %>%
           r.squared = round(r.squared, 3)) %>%
    select(metric, r.squared)
 
-### Bind up the results with some twine.
+### Bind up the results with some twine. ---------------------------------------------------------
 
 defensive_dvoa_results <- total_dvoa_stability %>%
    bind_rows(pass_dvoa_stability,
